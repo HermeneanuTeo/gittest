@@ -1,0 +1,53 @@
+class transaction
+
+opcode 
+op_A
+op_b
+writepointer
+
+
+
+randomise values/transactions
+print transaction
+
+========================================================
+
+class driver
+
+instantiem clasa transaction
+transaction tr;
+
+(declari interfata CA  SI VARIABILA)virtual tb_ifc
+
+
+new(tb_ifc vifc)
+
+vifc= new();
+
+functie reset_signals()
+{
+	io.cb.write_pointer   <= 5'h00;      // initialize write pointer
+    io.cb.read_pointer    <= 5'h1F;      // initialize read pointer
+    io.cb.load_en         <= 1'b0;       // initialize load control line
+    io.cb.reset_n         <= 1'b0;       // assert reset_n (active low)
+    repeat (2) @(io.cb) ;                // hold in reset for 2 clock cycles
+    io.cb.reset_n         <= 1'b1;       // deassert reset_n (active low)
+}
+
+functie generate_Transaction() // pentru repeat
+{
+	repeat(3) begin
+	tr.randomiseTransaction
+	tr.printTransaction
+
+	vifc.cb.op_A<=tr.op_A;
+	vifc.cb.op_b<=tr.op_b;
+	vifc.cb.opcode<=tr.opcode;
+	end
+}
+
+
+
+function read_register;
+function print_results;
+
